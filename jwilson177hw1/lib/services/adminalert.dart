@@ -2,9 +2,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:jwilson177hw1/models/user.dart';
+import 'package:jwilson177hw1/services/auth.dart';
 
 class AdminAlert {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final AuthService _authy = AuthService();
 
   final CollectionReference messages =
       Firestore.instance.collection('messages');
@@ -90,5 +92,10 @@ class AdminAlert {
       'datetime': DateTime.now().toString(),
       'Name': name
     });
+  }
+
+  Future updateProfile(
+      String first, String last, String email, String pw) async {
+    await _authy.updateuserWithEmailAndPassword(email, pw, first, last);
   }
 }
